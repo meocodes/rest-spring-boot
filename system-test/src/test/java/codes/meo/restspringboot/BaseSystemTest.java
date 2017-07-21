@@ -1,4 +1,4 @@
-package codes.meo.restspringboot.store;
+package codes.meo.restspringboot;
 
 import io.restassured.RestAssured;
 import org.junit.Before;

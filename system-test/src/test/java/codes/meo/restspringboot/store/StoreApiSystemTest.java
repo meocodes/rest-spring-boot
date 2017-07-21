@@ -1,5 +1,6 @@
 package codes.meo.restspringboot.store;
 
+import codes.meo.restspringboot.BaseSystemTest;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
