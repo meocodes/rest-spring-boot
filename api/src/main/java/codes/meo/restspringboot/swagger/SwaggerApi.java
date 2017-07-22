@@ -1,6 +1,6 @@
 package codes.meo.restspringboot.swagger;
 
-import codes.meo.restspringboot.error.Error;
+import codes.meo.common.api.error.Error;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.GET;

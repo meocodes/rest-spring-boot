@@ -1,5 +1,6 @@
-package codes.meo.restspringboot.error;
+package codes.meo.common.api.error;
 
+import codes.meo.common.api.error.Error;
 import org.junit.Before;
 import org.junit.Test;
 

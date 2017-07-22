@@ -1,4 +1,4 @@
-package codes.meo.restspringboot.error;
+package codes.meo.common.api.error;
 
 public class Error {
 
