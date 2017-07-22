@@ -1,9 +1,14 @@
 package codes.meo.restspringboot.store;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 public class Order {
 
     private Long id;
 
+    @JsonInclude(NON_NULL)
     public Long getId() {
         return id;
     }
