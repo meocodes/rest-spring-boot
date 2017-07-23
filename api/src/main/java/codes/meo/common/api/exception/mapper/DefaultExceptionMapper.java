@@ -2,6 +2,8 @@ package codes.meo.common.api.exception.mapper;
 
 import codes.meo.common.api.exception.ApiError;
 import codes.meo.common.api.exception.ApiErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -15,11 +17,14 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
 
     public static final String DEFAULT_MSG = "An internal error has occurred, please try again later. If problems persist contact customer support.";
 
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionMapper.class);
+
     @Override
     public Response toResponse(Exception e) {
         if (e instanceof WebApplicationException) {
             return ((WebApplicationException) e).getResponse();
         } else {
+            LOG.warn("Unexpected exception", e);
             return Response.status(INTERNAL_SERVER_ERROR).entity(toErrors(e)).build();
         }
     }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <property name="BASE_PATTERN" value="%clr(%d{ISO8601}){faint} %clr(%-40.40logger{40}){cyan} %-5level %clr(${PID:- }){magenta}" />
+    <property name="CONSOLE_LOG_PATTERN" value="%date{ISO8601} %-50logger{0} %-5level %-36X{CorrelationID} %msg%n"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${BASE_PATTERN} %clr(%-36.36thread){faint}    %clr(:){faint} %msg%n%rootException</Pattern>
+        </layout>
+    </appender>
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${BASE_PATTERN} %clr(%-36.36X{CorrelationID}){faint}    %clr(:){faint} %msg - %rootException</Pattern>
+        </layout>
+    </appender>
+    <appender name="REST_LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${BASE_PATTERN} %clr(%-36.36X{CorrelationID}){faint} %-3X{InOutFlag}: %msg%n%rootException</Pattern>
+        </layout>
+    </appender>
+    <logger name="codes.meo" level="INFO"/>
+    <logger name="codes.meo.common.api.exception" level="INFO" additivity="false">
+        <appender-ref ref="ERROR_LOG"/>
+    </logger>
+    <logger name="codes.meo.restspringboot.logging.RestLoggingFilter" level="INFO" additivity="false">
+        <appender-ref ref="REST_LOG"/>
+    </logger>
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
