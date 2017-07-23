@@ -1,14 +1,17 @@
 package codes.meo.restspringboot.store;
 
+import codes.meo.common.api.exception.ApiException;
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
+import org.junit.rules.ExpectedException;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static codes.meo.common.api.exception.ApiExceptionMatcher.isApiException;
+import static codes.meo.restspringboot.store.StoreExceptionType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -16,6 +19,9 @@ import static org.assertj.core.api.Assertions.fail;
  * Unit tests for {@link StoreController}.
  */
 public class StoreControllerTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     StoreController controller;
 
@@ -50,8 +56,9 @@ public class StoreControllerTest {
 
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test
     public void placeOrderNull() {
+        thrown.expect(isApiException(INVALID_ORDER));
         controller.placeOrder(null);
     }
 
@@ -61,34 +68,57 @@ public class StoreControllerTest {
         assertThat(controller.getOrderById(order.getId())).isSameAs(order);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getOrderByIdNotFound() {
-        controller.getOrderById(9999L);
+        Long orderId = Long.MAX_VALUE;
+        thrown.expect(isApiException(ORDER_NOT_FOUND, String.valueOf(orderId)));
+        controller.getOrderById(orderId);
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test
     public void getOrderByIdNull() {
+        thrown.expect(isApiException(INVALID_ORDER_ID));
         controller.getOrderById(null);
+    }
+
+    @Test
+    public void getOrderByIdLowerThanMinimum() {
+        thrown.expect(isApiException(INVALID_ORDER_ID));
+        controller.getOrderById(9999L);
     }
 
     @Test
     public void deleteOrder() {
         Order order = controller.placeOrder(new Order());
         controller.deleteOrder(order.getId());
-        try {
-            controller.getOrderById(order.getId());
-            fail(String.format("Deleting order '%s' was not successful.", order.getId()));
-        } catch (NotFoundException expected) {
-        }
+        assertOrderHasBeenDeleted(order.getId());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteOrderNotFound() {
+        Long orderId = Long.MAX_VALUE;
+        thrown.expect(isApiException(ORDER_NOT_FOUND, String.valueOf(orderId)));
+        controller.deleteOrder(orderId);
+    }
+
+    @Test
+    public void deleteOrderNull() {
+        thrown.expect(isApiException(INVALID_ORDER_ID));
+        controller.deleteOrder(null);
+    }
+
+    @Test
+    public void deleteOrderIdLowerThanMinimum() {
+        thrown.expect(isApiException(INVALID_ORDER_ID));
         controller.deleteOrder(9999L);
     }
 
-    @Test(expected = BadRequestException.class)
-    public void deleteOrderNull() {
-        controller.deleteOrder(null);
+    private void assertOrderHasBeenDeleted(Long orderId) {
+        try {
+            controller.getOrderById(orderId);
+            fail(String.format("Deleting order '%s' was not successful.", orderId));
+        } catch (ApiException expected) {
+            MatcherAssert.assertThat(expected, isApiException(ORDER_NOT_FOUND, String.valueOf(orderId)));
+        }
     }
 }
