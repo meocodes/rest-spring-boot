@@ -1,4 +1,4 @@
-package codes.meo.common.error;
+package codes.meo.common.exception;
 
 import java.text.MessageFormat;
 

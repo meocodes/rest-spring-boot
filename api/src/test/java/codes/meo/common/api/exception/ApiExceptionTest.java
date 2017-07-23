@@ -1,4 +1,4 @@
-package codes.meo.common.api.error;
+package codes.meo.common.api.exception;
 
 import org.junit.Test;
 

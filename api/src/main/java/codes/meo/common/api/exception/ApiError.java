@@ -1,6 +1,6 @@
-package codes.meo.common.api.error;
+package codes.meo.common.api.exception;
 
-public class Error {
+public class ApiError {
 
     private String code;
     private String message;
@@ -13,7 +13,7 @@ public class Error {
         this.code = code;
     }
 
-    public Error code(String code) {
+    public ApiError code(String code) {
         setCode(code);
         return this;
     }
@@ -26,7 +26,7 @@ public class Error {
         this.message = message;
     }
 
-    public Error message(String message) {
+    public ApiError message(String message) {
         setMessage(message);
         return this;
     }

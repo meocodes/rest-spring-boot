@@ -1,6 +1,6 @@
-package codes.meo.common.api.error;
+package codes.meo.common.api.exception;
 
-import codes.meo.common.error.CommonException;
+import codes.meo.common.exception.CommonException;
 
 import javax.ws.rs.core.Response.Status;
 

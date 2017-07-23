@@ -1,4 +1,4 @@
-package codes.meo.common.error;
+package codes.meo.common.exception;
 
 public class CommonRuntimeExceptionType implements CommonExceptionType {
 

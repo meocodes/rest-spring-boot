@@ -1,6 +1,6 @@
 package codes.meo.restspringboot.swagger;
 
-import codes.meo.common.api.error.Error;
+import codes.meo.common.api.exception.ApiErrorResponse;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.GET;
@@ -18,7 +18,7 @@ public interface SwaggerApi {
     @ApiOperation("Get the Swagger specification")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Swagger specification not found"),
-            @ApiResponse(code = 0, message = "One or more errors occurred", response = Error.class, responseContainer = "List")
+            @ApiResponse(code = 0, message = "One or more errors occurred", response = ApiErrorResponse.class)
     })
     String getSwaggerJson(
             @ApiParam(value = "Name of the Swagger specification file", required = true)

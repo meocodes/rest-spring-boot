@@ -1,17 +1,18 @@
-package codes.meo.common.error;
+package codes.meo.common.exception;
 
 public interface CommonExceptionType {
 
     /**
-     * Error code.
+     * Returns the error code.
      *
      * @return Error code
      */
     String getCode();
 
     /**
+     * Returns the error message.
      *
-     * @return
+     * @return Error message
      */
     String getMessage();
 }

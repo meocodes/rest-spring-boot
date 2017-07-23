@@ -1,21 +1,20 @@
-package codes.meo.common.api.error;
+package codes.meo.common.api.exception;
 
-import codes.meo.common.api.error.Error;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {@link Error}.
+ * Unit tests for {@link ApiError}.
  */
-public class ErrorTest {
+public class ApiErrorTest {
 
-    Error error;
+    ApiError error;
 
     @Before
     public void beforeEach() {
-        error = new Error();
+        error = new ApiError();
     }
 
     @Test
